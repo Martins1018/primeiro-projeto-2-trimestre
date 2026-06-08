@@ -1,13 +1,51 @@
 <!DOCTYPE html>
-
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfumaria Elegance</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Meu blog tech</h1>
-<p>Vou compartilhar conhecimentos sobre tecnologia e programação</p>
+
+<header>
+    <h1>🌹 Perfumaria Elegance</h1>
+    <a href="carrinho.html" class="btn-carrinho">
+        Carrinho 🛒
+    </a>
+</header>
+
+<section class="produtos">
+
+    <div class="produto">
+        <img src="imagens/perfume1.jpg" alt="Perfume Luxury">
+        <h3>Luxury Gold</h3>
+        <p>R$ 199,90</p>
+        <button onclick="adicionarCarrinho('Luxury Gold',199.90)">
+            Adicionar ao Carrinho
+        </button>
+    </div>
+
+    <div class="produto">
+        <img src="imagens/perfume2.jpg" alt="Perfume Floral">
+        <h3>Floral Dream</h3>
+        <p>R$ 149,90</p>
+        <button onclick="adicionarCarrinho('Floral Dream',149.90)">
+            Adicionar ao Carrinho
+        </button>
+    </div>
+
+    <div class="produto">
+        <img src="imagens/perfume3.jpg" alt="Perfume Black">
+        <h3>Black Essence</h3>
+        <p>R$ 249,90</p>
+        <button onclick="adicionarCarrinho('Black Essence',249.90)">
+            Adicionar ao Carrinho
+        </button>
+    </div>
+
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
