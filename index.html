@@ -3,109 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechStore - Venda de Celulares</title>
+    <title>TechStore - Loja de Celulares</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="navbar">
-            <div class="logo">Tech<span>Store</span></div>
-            <nav>
-                <ul>
-                    <li><a href="#">Início</a></li>
-                    <li><a href="#produtos">Celulares</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
-            <div class="cart-icon" onclick="toggleCarrinho()">
-                🛒 <span id="cart-count">0</span>
+        <div class="header-container">
+            <div class="logo">
+                <h1>TechStore</h1>
+            </div>
+            <div class="header-info">
+                <span>📱 Melhores Celulares de 2026</span>
             </div>
         </div>
     </header>
 
-    <section class="banner">
-        <div class="banner-content">
-            <h2>Os Melhores Smartphones de 2026</h2>
-            <p>Tecnologia de ponta com parcelamento em até 12x sem juros e frete grátis.</p>
-            <a href="#produtos" class="btn-banner">Confira as Ofertas</a>
-        </div>
-    </section>
-
-    <main id="produtos" class="container">
-        <h2 class="section-title">Modelos em Destaque</h2>
-        
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-badge">Lançamento</div>
-                <div class="product-img-placeholder">📱 Iphone 15 Pro</div>
-                <div class="product-info">
-                    <h3> Iphone 16 Pro Max</h3>
-                    <ul class="specs">
-                        <li><strong>Tela:</strong> Dynamic AMOLED 6.8"</li>
-                        <li><strong>Memória:</strong> 256GB / 12GB RAM</li>
-                        <li><strong>Câmera:</strong> Tripla de 200MP</li>
-                        <li><strong>Bateria:</strong> 5000 mAh</li>
-                    </ul>
-                    <div class="price-container">
-                        <span class="old-price">R$ 7.499,00</span>
-                        <span class="current-price">R$ 5.999,00</span>
-                    </div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Iphone 16 Pro Max', 5999)">Adicionar ao Carrinho</button>
-                </div>
+    <div class="container">
+        <main class="produtos-grid">
+            
+            <div class="produto-card">
+                <div class="produto-img">iPhone 15 Pro</div>
+                <h3 class="produto-nome">Apple iPhone 15 Pro (128GB)</h3>
+                <p class="produto-preco">R$ 6.899,00</p>
+                <button class="btn-adicionar" onclick="adicionarAoCarrinho('iPhone 15 Pro', 6899.00)">Adicionar ao Carrinho</button>
             </div>
 
-            <div class="product-card">
-                <div class="product-badge">Mais Vendido</div>
-                <div class="product-img-placeholder">📱 Xiaomi Poco x8 Pro</div>
-                <div class="product-info">
-                    <h3>Nova Lite Z</h3>
-                    <ul class="specs">
-                        <li><strong>Tela:</strong> LCD FHD+ 6.5"</li>
-                        <li><strong>Memória:</strong> 128GB / 6GB RAM</li>
-                        <li><strong>Câmera:</strong> Dupla de 50MP</li>
-                        <li><strong>Bateria:</strong> 4500 mAh</li>
-                    </ul>
-                    <div class="price-container">
-                        <span class="old-price">R$ 2.499,00</span>
-                        <span class="current-price">R$ 1.899,00</span>
-                    </div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Nova Lite Z', 1899)">Adicionar ao Carrinho</button>
-                </div>
+            <div class="produto-card">
+                <div class="produto-img">Galaxy S24 Ultra</div>
+                <h3 class="produto-nome">Samsung Galaxy S24 Ultra (256GB)</h3>
+                <p class="produto-preco">R$ 5.999,00</p>
+                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Galaxy S24 Ultra', 5999.00)">Adicionar ao Carrinho</button>
             </div>
 
-            <div class="product-card">
-                <div class="product-info">
-                    <h3> Z Fold Flip</h3>
-                    <ul class="specs">
-                        <li><strong>Tela:</strong> Dobrável 7.6"</li>
-                        <li><strong>Memória:</strong> 512GB / 16GB RAM</li>
-                        <li><strong>Câmera:</strong> Principal de 108MP</li>
-                        <li><strong>Bateria:</strong> 4800 mAh</li>
-                    </ul>
-                    <div class="price-container">
-                        <span class="old-price">R$ 12.999,00</span>
-                        <span class="current-price">R$ 9.499,00</span>
-                    </div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Quantum Fold X', 9499)">Adicionar ao Carrinho</button>
-                </div>
+            <div class="produto-card">
+                <div class="produto-img">Xiaomi 14</div>
+                <h3 class="produto-nome">Xiaomi 14 (512GB) Global</h3>
+                <p class="produto-preco">R$ 4.799,00</p>
+                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Xiaomi 14', 4799.00)">Adicionar ao Carrinho</button>
             </div>
-        </div>
-    </main>
 
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Seu Carrinho</h3>
-            <span class="close-cart" onclick="toggleCarrinho()">&times;</span>
-        </div>
-        <div id="cart-items" class="cart-items">
-            <p class="empty-cart-msg">Seu carrinho está vazio.</p>
-        </div>
-        <div class="cart-footer">
-            <div class="total-container">
-                <strong>Total:</strong>
-                <span id="cart-total">R$ 0,00</span>
+            <div class="produto-card">
+                <div class="produto-img">Motorola Edge 50</div>
+                <h3 class="produto-nome">Motorola Edge 50 Ultra</h3>
+                <p class="produto-preco">R$ 3.499,00</p>
+                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Motorola Edge 50', 3499.00)">Adicionar ao Carrinho</button>
             </div>
-            <button class="btn-checkout" onclick="finalizarCompra()">Finalizar Compra</button>
-        </div>
+
+        </main>
+
+        <aside class="carrinho-sidebar">
+            <h2>Seu Carrinho</h2>
+            <div id="itens-carrinho" class="itens-carrinho">
+                <p style="color: #888; text-align: center;" id="carrinho-vazio">O carrinho está vazio</p>
+            </div>
+            
+            <div class="carrinho-total">
+                <span>Total:</span>
+                <span id="valor-total">R$ 0,00</span>
+            </div>
+
+            <button class="btn-finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+        </aside>
     </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

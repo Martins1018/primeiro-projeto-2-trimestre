@@ -1,47 +1,85 @@
-// Array para armazenar os itens que o usuário escolhe
+// Array que armazenará os celulares adicionados
 let carrinho = [];
 
-// Função para abrir e fechar a barra lateral do carrinho
-function toggleCarrinho() {
-    const sidebar = document.getElementById('cart-sidebar');
-    sidebar.classList.toggle('open');
-}
-
-// Função para colocar produtos dentro do carrinho
+// Função para adicionar o celular ao carrinho
 function adicionarAoCarrinho(nome, preco) {
-    // Adiciona o item ao array de controle
-    carrinho.push({ nome, preco });
-    
-    // Atualiza a visualização na página
-    atualizarInterfaceCarrinho();
-    
-    // Abre automaticamente a barra para dar feedback ao usuário
-    const sidebar = document.getElementById('cart-sidebar');
-    if (!sidebar.classList.contains('open')) {
-        sidebar.classList.add('open');
+    // Procura se o produto já existe na lista do carrinho
+    const itemExistente = carrinho.find(item => item.nome === nome);
+
+    if (itemExistente) {
+        // Se já existe, só aumenta a quantidade
+        itemExistente.quantidade += 1;
+    } else {
+        // Se é um produto novo, adiciona o objeto no array
+        carrinho.push({ nome: nome, preco: preco, quantidade: 1 });
     }
+
+    // Renderiza o carrinho atualizado na tela
+    atualizarInterfaceCarrinho();
 }
 
-// Função para reconstruir a lista visual do carrinho e recalcular o total
+// Função para remover uma unidade do produto ou tirá-lo do carrinho
+function removerDoCarrinho(nome) {
+    const index = carrinho.findIndex(item => item.nome === nome);
+
+    if (index !== -1) {
+        carrinho[index].quantidade -= 1;
+        
+        // Se a quantidade chegou a zero, remove completamente da lista
+        if (carrinho[index].quantidade === 0) {
+            carrinho.splice(index, 1);
+        }
+    }
+
+    // Redesenha as atualizações na tela
+    atualizarInterfaceCarrinho();
+}
+
+// Função responsável por calcular totais e montar o HTML do carrinho
 function atualizarInterfaceCarrinho() {
-    const cartCount = document.getElementById('cart-count');
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
+    const containerItens = document.getElementById('itens-carrinho');
+    const elementoTotal = document.getElementById('valor-total');
     
-    // Atualiza o contador de bolinha vermelha no ícone superior
-    cartCount.innerText = carrinho.length;
-    
-    // Se estiver vazio, exibe a mensagem padrão
+    // Reseta o conteúdo interno antes de recriar
+    containerItens.innerHTML = '';
+
+    // Se estiver vazio, exibe mensagem padrão e zera o valor
     if (carrinho.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Seu carrinho está vazio.</p>';
-        cartTotal.innerText = 'R$ 0,00';
+        containerItens.innerHTML = '<p style="color: #888; text-align: center;">O carrinho está vazio</p>';
+        elementoTotal.innerText = 'R$ 0,00';
         return;
     }
-    
-    // Limpa os itens antigos para gerar a lista atualizada
-    cartItemsContainer.innerHTML = '';
-    let somaTotal = 0;
-    
-    // Varre o array de itens gerando os códigos de exibição
-    carrinho.forEach((item, index) => {
-        s
+
+    let valorTotalGeral = 0;
+
+    // Passa por cada item comprado construindo sua linha visual
+    carrinho.forEach(item => {
+        const subtotal = item.preco * item.quantidade;
+        valorTotalGeral += subtotal;
+
+        const divItem = document.createElement('div');
+        divItem.classList.add('item-carrinho');
+        divItem.innerHTML = `
+            <div>
+                <strong>${item.nome}</strong><br>
+                ${item.quantidade}x - R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </div>
+            <button class="btn-remover" onclick="removerDoCarrinho('${item.nome}')">X</button>
+        `;
+        containerItens.appendChild(divItem);
+    });
+
+    // Exibe o preço final formatado em padrão brasileiro (R$)
+    elementoTotal.innerText = `R$ ${valorTotalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+}
+
+// Função acionada pelo botão de concluir a compra
+function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio! Adicione algum celular antes de finalizar.');
+    } else {
+        alert('Pedido finalizado com sucesso! Obrigado por comprar na TechStore.');
+        carrinho = []; // Limpa os dados do carrinho
+        atualizarInterfaceCarrinho(); // Reseta a tela
+    }
+}
