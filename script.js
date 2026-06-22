@@ -1,190 +1,91 @@
-/* --- ESTILOS GERAIS --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// Array que vai guardar os produtos que o usuário colocar no carrinho
+let carrinho = [];
+
+// Lista de banco de dados fictícia dos produtos (deve bater com o HTML)
+const produtosDB = [
+    { id: 1, nome: "Saca de Milho (60kg)", preco: 85.00 },
+    { id: 2, nome: "Adubo NPK (50kg)", preco: 140.00 },
+    { id: 3, nome: "Semente de Soja (40kg)", preco: 120.00 }
+];
+
+// Função para abrir e fechar a barra lateral do carrinho
+function toggleCarrinho() {
+    const sidebar = document.getElementById('sidebar-carrinho');
+    sidebar.classList.toggle('active');
 }
 
-body {
-    background-color: #f4f6f9;
-    color: #333;
-}
+// Função para adicionar um produto ao carrinho
+function adicionarAoCarrinho(idProduto) {
+    // Encontra os dados reais do produto pelo ID
+    const produto = produtosDB.find(p => p.id === idProduto);
+    
+    // Verifica se o produto já está no carrinho
+    const itemExistente = carrinho.find(item => item.id === idProduto);
 
-header {
-    background-color: #1a1a2e;
-    color: white;
-    padding: 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo h1 {
-    font-size: 24px;
-    color: #00adb5;
-}
-
-/* --- LAYOUT PRINCIPAL --- */
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 30px;
-}
-
-/* --- VITRINE DE PRODUTOS --- */
-.produtos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.produto-card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.produto-card:hover {
-    transform: translateY(-5px);
-}
-
-.produto-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
-    border-radius: 6px;
-    margin-bottom: 15px;
-    background-color: #eaeaea; /* Fundo reserva enquanto a foto carrega */
-}
-
-.produto-nome {
-    font-size: 17px;
-    margin-bottom: 10px;
-    color: #222831;
-    font-weight: 600;
-}
-
-.produto-preco {
-    font-size: 20px;
-    font-weight: bold;
-    color: #00adb5;
-    margin-bottom: 15px;
-}
-
-.btn-adicionar {
-    background-color: #00adb5;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.btn-adicionar:hover {
-    background-color: #008087;
-}
-
-/* --- CARRINHO DE COMPRAS --- */
-.carrinho-sidebar {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    height: fit-content;
-    position: sticky;
-    top: 90px;
-}
-
-.carrinho-sidebar h2 {
-    border-bottom: 2px solid #f4f6f9;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-.itens-carrinho {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 15px;
-}
-
-.item-carrinho {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-}
-
-.btn-remover {
-    background: none;
-    border: none;
-    color: #ff4d4d;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 5px;
-}
-
-.btn-remover:hover {
-    color: #cc0000;
-}
-
-.carrinho-total {
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 2px solid #f4f6f9;
-}
-
-.btn-finalizar {
-    width: 100%;
-    background-color: #393e46;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    margin-top: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.btn-finalizar:hover {
-    background-color: #222831;
-}
-
-/* --- RESPONSIVIDADE --- */
-@media (max-width: 900px) {
-    .container {
-        grid-template-columns: 1fr;
+    if (itemExistente) {
+        // Se já existe, só aumenta a quantidade
+        itemExistente.quantidade += 1;
+    } else {
+        // Se é novo, adiciona o objeto no array com quantidade 1
+        carrinho.push({ ...produto, quantidade: 1 });
     }
-    .carrinho-sidebar {
-        position: static;
+
+    atualizarInterfaceCarrinho();
+}
+
+// Função para remover um produto do carrinho
+function removerDoCarrinho(idProduto) {
+    // Filtra o array para remover o item selecionado
+    carrinho = carrinho.filter(item => item.id !== idProduto);
+    atualizarInterfaceCarrinho();
+}
+
+// Função que atualiza o visual do carrinho, quantidade de itens e o valor total
+function atualizarInterfaceCarrinho() {
+    const containerItens = document.getElementById('itens-carrinho');
+    const totalCarrinho = document.getElementById('total-carrinho');
+    const contadorCart = document.getElementById('cart-count');
+    
+    // Limpa o container para renderizar do zero
+    containerItens.innerHTML = '';
+    
+    let precoTotal = 0;
+    let totalItens = 0;
+
+    if (carrinho.length === 0) {
+        containerItens.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
+    } else {
+        carrinho.forEach(item => {
+            precoTotal += item.preco * item.quantidade;
+            totalItens += item.quantidade;
+
+            // Cria o elemento HTML de cada item inserido
+            const itemElemento = document.createElement('div');
+            itemElemento.classList.add('item-no-carrinho');
+            itemElemento.innerHTML = `
+                <div class="item-info">
+                    <h4>${item.nome}</h4>
+                    <p>Qtd: ${item.quantidade} x R$ ${item.preco.toFixed(2).replace('.', ',')}</p>
+                </div>
+                <button class="btn-remover" onclick="removerDoCarrinho(${item.id})">Remover</button>
+            `;
+            containerItens.appendChild(itemElemento);
+        });
     }
+
+    // Atualiza o valor total e o contador do topo
+    totalCarrinho.innerText = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+    contadorCart.innerText = totalItens;
+}
+
+// Mensagem ao finalizar a compra
+function finalizarCompra() {
+    if(carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+    alert("Pedido realizado com sucesso! Obrigado por comprar na AgroVendas.");
+    carrinho = []; // Limpa o carrinho
+    atualizarInterfaceCarrinho();
+    toggleCarrinho(); // Fecha a barra lateral
 }

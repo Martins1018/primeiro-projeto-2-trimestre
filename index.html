@@ -3,69 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechStore - Loja de Celulares</title>
+    <title>AgroVendas - Produtos do Campo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <h1>TechStore</h1>
-            </div>
-            <div class="header-info">
-                <span>📱 Melhores Celulares de 2026</span>
-            </div>
+        <div class="logo">
+            <h1>Agro<span>Vendas</span></h1>
+        </div>
+        <div class="cart-icon" onclick="toggleCarrinho()">
+            🛒 <span id="cart-count">0</span>
         </div>
     </header>
 
-    <div class="container">
-        <main class="produtos-grid">
+    <main>
+        <section class="products-container">
+            <h2>Nossos Produtos</h2>
+            <div class="grid-produtos">
+                
+                <div class="produto-card" data-id="1" data-nome="Saca de Milho (60kg)" data-preco="85.00">
+                    <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400" alt="Saca de Milho">
+                    <h3>Saca de Milho (60kg)</h3>
+                    <p class="preco">R$ 85,00</p>
+                    <button class="btn-add" onclick="adicionarAoCarrinho(1)">Adicionar ao Carrinho</button>
+                </div>
+
+                <div class="produto-card" data-id="2" data-nome="Adubo NPK (50kg)" data-preco="140.00">
+                    <img src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400" alt="Adubo NPK">
+                    <h3>Adubo NPK (50kg)</h3>
+                    <p class="preco">R$ 140,00</p>
+                    <button class="btn-add" onclick="adicionarAoCarrinho(2)">Adicionar ao Carrinho</button>
+                </div>
+
+                <div class="produto-card" data-id="3" data-nome="Semente de Soja (40kg)" data-preco="120.00">
+                    <img src="https://images.unsplash.com/photo-1594756202469-9ff9799a2e4e?w=400" alt="Semente de Soja">
+                    <h3>Semente de Soja (40kg)</h3>
+                    <p class="preco">R$ 120,00</p>
+                    <button class="btn-add" onclick="adicionarAoCarrinho(3)">Adicionar ao Carrinho</button>
+                </div>
+
+            </div>
+        </section>
+
+        <aside id="sidebar-carrinho" class="sidebar-carrinho">
+            <div class="carrinho-header">
+                <h2>Seu Carrinho</h2>
+                <button class="btn-fechar" onclick="toggleCarrinho()">&times;</button>
+            </div>
             
-            <div class="produto-card">
-                <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&auto=format&fit=crop&q=80" alt="iPhone 15 Pro" class="produto-img">
-                <h3 class="produto-nome">Apple iPhone 15 Pro (128GB)</h3>
-                <p class="produto-preco">R$ 6.899,00</p>
-                <button class="btn-adicionar" onclick="adicionarAoCarrinho('iPhone 15 Pro', 6899.00)">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="produto-card">
-                <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&auto=format&fit=crop&q=80" alt="Galaxy S24 Ultra" class="produto-img">
-                <h3 class="produto-nome">Samsung Galaxy S24 Ultra (256GB)</h3>
-                <p clas-preco">R$ 5.999,00</p>
-                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Galaxy S24 Ultra', 5999.00)">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="produto-card">
-                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&auto=format&fit=crop&q=80" alt="Xiaomi 14" class="produto-img">
-                <h3 class="produto-nome">Xiaomi 14 (512GB) Global</h3>
-                <p class="produto-preco">R$ 4.799,00</p>
-                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Xiaomi 14', 4799.00)">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="produto-card">
-                <img src="https://images.unsplash.com/photo-1565630916779-e303be97b6f5?w=400&auto=format&fit=crop&q=80" alt="Motorola Edge 50" class="produto-img">
-                <h3 class="produto-nome">Motorola Edge 50 Ultra</h3>
-                <p class="produto-preco">R$ 3.499,00</p>
-                <button class="btn-adicionar" onclick="adicionarAoCarrinho('Motorola Edge 50', 3499.00)">Adicionar ao Carrinho</button>
-            </div>
-
-        </main>
-
-        <aside class="carrinho-sidebar">
-            <h2>Seu Carrinho</h2>
             <div id="itens-carrinho" class="itens-carrinho">
-                <p style="color: #888; text-align: center;" id="carrinho-vazio">O carrinho está vazio</p>
-            </div>
-            
-            <div class="carrinho-total">
-                <span>Total:</span>
-                <span id="valor-total">R$ 0,00</span>
+                <p class="carrinho-vazio">Seu carrinho está vazio.</p>
             </div>
 
-            <button class="btn-finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+            <div class="carrinho-footer">
+                <h3>Total: <span id="total-carrinho">R$ 0,00</span></h3>
+                <button class="btn-finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+            </div>
         </aside>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
